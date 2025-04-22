@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation + Fertilizer AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Crop & Soil Intelligence 🌾🤖</h1>
+
+        <form id="crop-form">
+            <!-- Input Fields -->
+            <div class="input-group">
+                <label for="N">Nitrogen (N):</label>
+                <input type="number" id="N" name="N" required>
+            </div>
+            <div class="input-group">
+                <label for="P">Phosphorus (P):</label>
+                <input type="number" id="P" name="P" required>
+            </div>
+            <div class="input-group">
+                <label for="K">Potassium (K):</label>
+                <input type="number" id="K" name="K" required>
+            </div>
+            <div class="input-group">
+                <label for="temperature">Temperature (°C):</label>
+                <input type="number" id="temperature" name="temperature" required>
+            </div>
+            <div class="input-group">
+                <label for="humidity">Humidity (%):</label>
+                <input type="number" id="humidity" name="humidity" required>
+            </div>
+            <div class="input-group">
+                <label for="ph">pH:</label>
+                <input type="number" id="ph" name="ph" required>
+            </div>
+            <div class="input-group">
+                <label for="rainfall">Rainfall (mm):</label>
+                <input type="number" id="rainfall" name="rainfall" required>
+            </div>
+            <button type="submit">Predict 🚀</button>
+        </form>
+
+        <div id="loading" style="display:none;">
+            <img src="{{ url_for('static', filename='spinner.mp4') }}" alt="Loading..." width="100">
+        </div>
+
+        <div id="result-card" style="display: none;">
+            <h2>🌾 Recommended Crop: <span id="crop-name"></span></h2>
+            <p>🌱 Soil Health Score: <span id="soil-score"></span>%</p>
+            <p>🛠️ Improvement Tip: <span id="improvement-tip"></span></p>
+            <p>📅 Best Season: <span id="best-season"></span></p>
+            <p>💪 Growth Difficulty: <span id="growth-difficulty"></span></p>
+            <p>🌽 Companion Crops: <span id="companion-crops"></span></p>
+        </div>
+
+        <!-- 🔥 NEW Fertilizer Recipe Card -->
+        <div id="fertilizer-card" style="display: none; margin-top: 30px;">
+            <h2>🧪 AI Fertilizer Recipe Maker 🍵</h2>
+            <p>💡 Custom Mix: <span id="fertilizer-recipe"></span></p>
+            <p>📋 Application Tips: <span id="application-tips"></span></p>
+        </div>
+
+    </div>
+
+    <script>
+    const form = document.getElementById('crop-form');
+    const loadingDiv = document.getElementById('loading');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        loadingDiv.style.display = 'block'; 
+
+        const formData = new FormData(form);
+        const data = {};
+        for (const [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        try {
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            loadingDiv.style.display = 'none'; 
+
+            // Populate main recommendation
+            document.getElementById('crop-name').innerText = result.crop_recommendation;
+            document.getElementById('soil-score').innerText = result.soil_health_score;
+            document.getElementById('improvement-tip').innerText = result.improvement_tip;
+            document.getElementById('best-season').innerText = result.best_season;
+            document.getElementById('growth-difficulty').innerText = result.growth_difficulty;
+            document.getElementById('companion-crops').innerText = result.companion_crops.join(', ');
+
+            document.getElementById('result-card').style.display = 'block';
+
+            // Generate Fertilizer Recipe (🔮 AI Magic)
+            document.getElementById('fertilizer-recipe').innerText = `Mix ${data.N/2}g N, ${data.P/2}g P, ${data.K/2}g K in compost`;
+            document.getElementById('application-tips').innerText = "Apply twice a month early morning for best absorption 🌞.";
+            
+            document.getElementById('fertilizer-card').style.display = 'block'; 
+
+        } catch (error) {
+            console.error('Error:', error);
+            loadingDiv.style.display = 'none';
+        }
+    });
+    </script>
+
+</body>
+</html>

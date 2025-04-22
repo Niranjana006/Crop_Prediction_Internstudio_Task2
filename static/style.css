@@ -1,0 +1,119 @@
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: url("path/to/your/crop-background-image.jpg"); /* Replace with your image path */
+    background-size: cover;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #a87b32; /* Earthy brown border */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box; 
+}
+
+button[type="submit"] {
+    background-color: #80b348;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+button[type="submit"]:hover {
+    background-color: #4CAF50;
+    transform: scale(1.05);
+}
+
+/* Main Result Card */
+#result-card {
+    margin: 20px auto;
+    padding: 20px;
+    width: 60%;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+#result-card h2 {
+    margin-top: 0;
+    color: #4CAF50;
+}
+
+#result-text {
+    font-size: 22px;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* NEW: Fertilizer Recipe Card */
+#fertilizer-card {
+    margin: 30px auto;
+    padding: 20px;
+    width: 60%;
+    background: #eaf7ea; /* Slight greenish background */
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+#fertilizer-card h2 {
+    color: #80b348;
+    margin-bottom: 15px;
+}
+
+#fertilizer-card p {
+    font-size: 18px;
+    color: #555;
+    margin: 10px 0;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Optional: Loading Spinner */
+#loading img {
+    display: block;
+    margin: 20px auto;
+}
